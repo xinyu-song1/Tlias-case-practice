@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tlias智能学习辅助系统</title>
+    <style>
+        /* 重置默认样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        /* 顶部导航栏样式 */
+        .top-bar {
+            background-color: #eee; /* 灰色背景 */
+            padding: 10px 20px;
+            display: flex; /* flex弹性布局 */
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* 标题样式 */
+        .top-bar h1 {
+            margin: 0;
+            font-weight: bold; /* 加粗显示 */
+            font-family: "楷体";
+            font-size: 20px;
+        }
+
+        /* 退出链接样式 */
+        .logout-link {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .logout-link:hover {
+            text-decoration: underline;
+        }
+
+        /* 搜索表单样式 */
+        .search-form {
+            display: flex;
+            align-items: center;
+            gap: 15px; /* 调整元素之间的间距 */
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .form-item {
+            display: flex;
+            align-items: center;
+            gap: 5px; /* 调整表单项内标签与输入框之间的间距 */
+        }
+
+        .form-item label {
+            min-width: 40px;
+            font-size: 14px;
+        }
+
+        .form-item input,
+        .form-item select {
+            padding: 5px 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 6px 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        button[type="reset"] {
+            background-color: #6c757d;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <div class="top-bar">
+        <h1>Tlias智能学习辅助系统</h1>
+        <a href="#" class="logout-link">退出登录</a>
+    </div>
+
+    <!-- 搜索表单 -->
+    <form class="search-form" action="/search" method="post">
+        <div class="form-item">
+            <label for="name">姓名:</label>
+            <input type="text" id="name" name="name" placeholder="请输入姓名">
+        </div>
+        <div class="form-item">
+            <label for="gender">性别:</label>
+            <select id="gender" name="gender">
+                <option value="">请选择</option>
+                <option value="男">男</option>
+                <option value="女">女</option>
+            </select>
+        </div>
+        <div class="form-item">
+            <label for="position">职位:</label>
+            <select id="position" name="position">
+                <option value="">请选择</option>
+                <option value="班主任">班主任</option>
+                <option value="讲师">讲师</option>
+                <option value="学工主管">学工主管</option>
+                <option value="教研主管">教研主管</option>
+                <option value="咨询师">咨询师</option>
+            </select>
+        </div>
+        <button type="submit">查询</button>
+        <button type="reset">清空</button>
+    </form>
+
+    <!-- 页面主体内容区 -->
+    <!-- <div class="main-content">
+        <p>这里是员工信息展示区域...</p>
+    </div> -->
+</body>
+</html>
