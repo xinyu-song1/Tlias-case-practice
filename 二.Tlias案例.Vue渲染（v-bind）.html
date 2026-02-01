@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tlias智能学习辅助系统</title>
+    <style>
+        /* 重置默认样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        /* 顶部导航栏样式 */
+        .top-bar {
+            background-color: #eee; /* 灰色背景 */
+            padding: 10px 20px;
+            display: flex; /* flex弹性布局 */
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* 标题样式 */
+        .top-bar h1 {
+            margin: 0;
+            font-weight: bold; /* 加粗显示 */
+            font-family: "楷体";
+            font-size: 20px;
+        }
+
+        /* 退出链接样式 */
+        .logout-link {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .logout-link:hover {
+            text-decoration: underline;
+        }
+
+        /* 搜索表单样式 */
+        .search-form {
+            display: flex;
+            align-items: center;
+            gap: 15px; /* 调整元素之间的间距 */
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .form-item {
+            display: flex;
+            align-items: center;
+            gap: 5px; /* 调整表单项内标签与输入框之间的间距 */
+        }
+
+        .form-item label {
+            min-width: 40px;
+            font-size: 14px;
+        }
+
+        .form-item input,
+        .form-item select {
+            padding: 5px 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 6px 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        button[type="reset"] {
+            background-color: #6c757d;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        /* 添加表格样式 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #e6e6e6;
+        }
+
+        td img {
+            width: 50px; /* 设置头像的宽度 */
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        td button {
+            padding: 4px 8px; 
+            margin: 0 5px; 
+            background-color: #007bff;
+            color: white;
+            border: none; /* 去除按钮的边框 */
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        td button:hover {
+            opacity: 0.9; /* 鼠标悬停时按钮的透明度 */
+        }
+        
+        .footer {
+            background-color: #a1a0a0; /* 灰色背景 */
+            color: white; /* 白色字体 */
+            text-align: center; /* 居中对齐 */
+            padding: 10px 0;
+            margin-top: 20px;
+        }
+        
+        #container {
+            width: 80%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+    <!-- 顶部导航栏 -->
+    <div class="top-bar">
+        <h1>Tlias智能学习辅助系统</h1>
+        <a href="#" class="logout-link">退出登录</a>
+    </div>
+
+    <!-- 搜索表单 -->
+    <form class="search-form" action="/search" method="post">
+        <div class="form-item">
+            <label for="name">姓名:</label>
+            <input type="text" id="name" name="name" placeholder="请输入姓名">
+        </div>
+        <div class="form-item">
+            <label for="gender">性别:</label>
+            <select id="gender" name="gender">
+                <option value="">请选择</option>
+                <option value="男">男</option>
+                <option value="女">女</option>
+            </select>
+        </div>
+        <div class="form-item">
+            <label for="position">职位:</label>
+            <select id="position" name="position">
+                <option value="">请选择</option>
+                <option value="班主任">班主任</option>
+                <option value="讲师">讲师</option>
+                <option value="学工主管">学工主管</option>
+                <option value="教研主管">教研主管</option>
+                <option value="咨询师">咨询师</option>
+            </select>
+        </div>
+        <button type="submit">查询</button>
+        <button type="reset">清空</button>
+    </form>
+
+    <!-- 页面主体内容区 -->
+    <div class="main-content">
+        <table>
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>头像</th>
+                    <th>职位</th>
+                    <th>入职日期</th>
+                    <th>最后操作时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <!-- vue渲染 -->
+                <tr v-for="(e,index) in empList" :key="e.id">
+                    <td>{{index+1}}</td>
+                    <td>{{e.name}}</td>
+                    <td>{{e.gender==1?'男':'女'}}</td>
+                    <!-- vue渲染(v-bind) -->
+                    <td><img v-bind:src="e.image" :alt="e.name"></td>
+                    <td>{{e.job}}</td>
+                    <td>{{e.entrydata}}</td>
+                    <td>{{e.updatatime}}</td>
+                    <td>
+                        <button>编辑</button>
+                        <button>删除</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script type="module">
+        import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+        createApp({
+            data(){
+                return{
+                    empList:[
+                    {
+                        id:1,
+                        name:'向天问',
+                        gender:1,
+                        image:'https://placehold.co/50x50',
+                        job:'1',
+                        entrydata:'2026-01-30',
+                        updatatime:'2026-02-01 11:00:00'
+                    },
+                    {
+                        id:2,
+                        name:'东方不败',
+                        gender:1,
+                        image:'https://placehold.co/50x50',
+                        job:'2',
+                        entrydata:'2026-01-30',
+                        updatatime:'2026-02-01 12:00:00'
+                    },
+                    {
+                        id:3,
+                        name:'令狐冲',
+                        gender:1,
+                        image:'https://placehold.co/50x50',
+                        job:'3',
+                        entrydata:'2026-01-30',
+                        updatatime:'2026-02-01 13:00:00'
+                    },
+                    {
+                        id:4,
+                        name:'任盈盈',
+                        gender:2,
+                        image:'https://placehold.co/50x50',
+                        job:'4',
+                        entrydata:'2026-01-30',
+                        updatatime:'2026-02-01 14:00:00'
+                    },
+                    {
+                        id:5,
+                        name:'岳林珊',
+                        gender:2,
+                        image:'https://placehold.co/50x50',
+                        job:'5',
+                        entrydata:'2026-01-30',
+                        updatatime:'2026-02-01 15:00:00'
+                    },
+                    ]
+                }
+            }
+        }).mount('#container')
+    </script>
+
+    <!-- 页脚版权区域 -->
+    <div>
+    <footer class="footer">
+        <p>个人学习项目</p>
+        <p>版权所有 Copyright 2005-2026 All Rights Reserved</p>
+    </footer>
+    </div>
+
+</body>
+</html>
